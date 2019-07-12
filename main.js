@@ -11,6 +11,18 @@
 // 检查手机是否开启无障碍服务
 auto();
 
+//用于自动点击请求截图权限时的“立即开始”
+threads.start(function () {
+  var remember;
+  var beginBtn;
+  var timeout = 2000;
+  if (remember = id("com.android.systemui:id/remember").checkable(true).findOne(timeout)) {
+      remember.click();
+  }
+  if (beginBtn = classNameContains("Button").textContains("立即开始").findOne(timeout)) {
+      beginBtn.click();
+  }
+});
 // 请求截图权限
 if (! requestScreenCapture()) {
   toast("请求截图失败");
