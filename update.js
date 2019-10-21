@@ -1,7 +1,7 @@
 /*
- * @Author: NickHopps 
- * @Last Modified by: NickHopps
- * @Last Modified time: 2019-04-08 08:38:08
+ * @Author: NickHopps
+ * @Last Modified by: shijianyue
+ * @Last Modified time: 2019-10-21 18:43:16
  * @Description: 脚本更新
  */
 
@@ -15,7 +15,7 @@ importPackage(Packages.okhttp3);
 
 /**
  * 向服务器查询发生更改的文件列表
- * 
+ *
  * @param {*} server 提供更新文件的服务器地址
  * @param {*} path 本地需要更新文件的目录路径
  */
@@ -68,6 +68,7 @@ function GetChangedFileList(server, path) {
       let res = http.postJson(url, postdata);
       if (res.statusCode != 200) {
         toastLog("请求失败: " + res.statusCode + " " + res.statusMessage);
+        return {}
       } else {
         return res.body.json();
       }
@@ -77,7 +78,7 @@ function GetChangedFileList(server, path) {
 
 /**
  * 下载工具类，可监听下载进度
- * 
+ *
  * @param {*} url 下载链接
  * @param {*} path 保存地址
  * @param {*} listener 下载监听
@@ -94,7 +95,7 @@ function DownloadUtil(url, path, listener) {
       _file_temp = null,
       _file_dir = null,
       _buffer = java.lang.reflect.Array.newInstance(java.lang.Byte.TYPE, 2048);
-  
+
   return {
     download: function() {
       let client = new OkHttpClient();
@@ -157,7 +158,7 @@ function DownloadUtil(url, path, listener) {
     if (res.statusCode != 200) {
       toastLog("请求失败: " + res.statusCode + " " + res.statusMessage);
     } else {
-      dialogs.build({ 
+      dialogs.build({
         title: "发现新版本",
         content: res.body.string(),
         positive: "更新",
@@ -175,7 +176,7 @@ function DownloadUtil(url, path, listener) {
           downloadDialog.dismiss();
           downloadDialog = null;
         }).show();
-        
+
         let counter = 0,
             total = 0,
             realurl = update_files.map((uri) => {return server + "/ant-forest" + uri}),
@@ -202,7 +203,7 @@ function DownloadUtil(url, path, listener) {
         };
         new DownloadUtil(realurl[counter], abspath[counter], callback).download();
       }).show();
-    } 
+    }
   } else {
     toastLog("当前已经是最新版本了");
   }
