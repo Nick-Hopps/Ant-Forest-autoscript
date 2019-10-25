@@ -29,7 +29,7 @@ engines.all().slice(1).forEach(script => {
  * 依赖加载
  ***********************/
 // 检查更新
-engines.execScriptFile("./update.js");
+//engines.execScriptFile("./update.js");
 
 // 加载本地配置
 var config = storages.create("ant_forest_config");
